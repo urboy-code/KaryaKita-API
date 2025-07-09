@@ -32,4 +32,11 @@ class ServiceController extends Controller
 
         return (new ServiceResource($service))->response()->setStatusCode(201);
     }
+
+    public function show(Service $service)
+    {
+        $service->load('user.profile', 'category');
+
+        return new ServiceResource($service);
+    }
 }

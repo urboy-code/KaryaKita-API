@@ -17,3 +17,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/services/{service}', [ServiceController::class, 'show']);

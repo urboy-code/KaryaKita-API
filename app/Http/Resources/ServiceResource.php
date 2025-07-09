@@ -22,6 +22,7 @@ class ServiceResource extends JsonResource
             'harga_format' => 'Rp ' . number_format($this->price),
             'harga_angka' => $this->price,
             'deskripsi_singkat' => Str::limit($this->description, 100),
+            'deskripsi_lengkap' => $this->description,
             'foto_url' => $this->photo ? asset('storage/'.$this->photo) : null,
             'kategori' => [
                 'nama_kategori' => $this->category?->name,
