@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate as FacadesGate;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -38,5 +40,42 @@ class ServiceController extends Controller
         $service->load('user.profile', 'category');
 
         return new ServiceResource($service);
+    }
+
+    public function update(UpdateServiceRequest $request, Service $service)
+    {
+        FacadesGate::authorize('update', $service);
+        $validated = $request->validated();
+
+        if ($request->hasFile('photo')) {
+            // Hapus foto lama biar hemat tempat
+            if ($service->photo) {
+                Storage::disk('public')->delete($service->photo);
+            }
+            // Simpan foto baru
+            $validated['photo'] = $request->file('photo')->store('service-photos', 'public');
+        }
+
+        // Update data di database
+        $service->update($validated);
+
+        // Kembalikan data yang sudah diupdate dengan format rapi
+        return new ServiceResource($service);
+    }
+    public function destroy(Service $service)
+    {
+        // Satpam Otorisasi
+        FacadesGate::authorize('delete', $service);
+
+        // Hapus foto dari storage
+        if ($service->photo) {
+            Storage::disk('public')->delete($service->photo);
+        }
+
+        // Hapus data dari database
+        $service->delete();
+
+        // Beri pesan sukses
+        return response()->json(['message' => 'Jasa berhasil dihapus']);
     }
 }
