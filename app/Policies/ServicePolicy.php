@@ -38,16 +38,18 @@ class ServicePolicy
     public function update(User $user, Service $service): Response
     {
         return $user->id === $service->user_id
-        ? Response::allow()
-        : Response::deny('You do not own this service.');
+            ? Response::allow()
+            : Response::deny('You do not own this service.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Service $service): bool
+    public function delete(User $user, Service $service): Response
     {
-        return false;
+        return $user->id === $service->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this service.');
     }
 
     /**
