@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,10 @@ Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
   Route::post('/services', [ServiceController::class, 'store']);
   Route::patch('/services/{service}', [ServiceController::class, 'update']);
   Route::delete('/services/{service}', [ServiceController::class, 'destroy']); 
+});
+
+Route::middleware(['auth:sanctum', 'role:client'])->group(function(){
+  Route::post('/bookings', [BookingController::class, 'store']);
 });
 
 
