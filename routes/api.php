@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClientBookingController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:client'])->group(function(){
   Route::post('/bookings', [BookingController::class, 'store']);
+  Route::get('/client/bookings', [ClientBookingController::class, 'index']);
 });
 
 
