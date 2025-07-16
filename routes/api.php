@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientBookingController;
+use App\Http\Controllers\Api\TalentBookingController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
@@ -16,12 +17,18 @@ Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
   });
   Route::post('/services', [ServiceController::class, 'store']);
   Route::patch('/services/{service}', [ServiceController::class, 'update']);
-  Route::delete('/services/{service}', [ServiceController::class, 'destroy']); 
+  Route::delete('/services/{service}', [ServiceController::class, 'destroy']);
+
+  // Route untuk melihat booking yang masuk dari client
+  Route::get('/talent/bookings', [TalentBookingController::class, 'index']);
+
+  // Route untuk menerima booking
+  Route::patch('/talent/bookings/{accept}', [TalentBookingController::class, 'accept']);
 });
 
-Route::middleware(['auth:sanctum', 'role:client'])->group(function(){
-  Route::post('/bookings', [BookingController::class, 'store']);
+Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
   Route::get('/client/bookings', [ClientBookingController::class, 'index']);
+  Route::post('/bookings', [BookingController::class, 'store']);
 });
 
 
