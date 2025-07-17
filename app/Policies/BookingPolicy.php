@@ -63,4 +63,9 @@ class BookingPolicy
     {
         return false;
     }
+
+    public function pay(User $user, Booking $booking): bool
+    {
+        return $user->id === $booking->client_id;
+    }
 }

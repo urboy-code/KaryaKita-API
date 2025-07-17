@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
   Route::get('/talent/bookings', [TalentBookingController::class, 'index']);
 
   // Route untuk menerima booking
-  Route::patch('/talent/bookings/{booking}/reject', [TalentBookingController::class, 'accept']);
+  Route::patch('/talent/bookings/{booking}/accept', [TalentBookingController::class, 'accept']);
 
   // Route untuk menolak booking
   Route::patch('/talent/bookings/{booking}/reject', [TalentBookingController::class, 'reject']);
@@ -32,6 +32,9 @@ Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
   Route::get('/client/bookings', [ClientBookingController::class, 'index']);
   Route::post('/bookings', [BookingController::class, 'store']);
+
+  // Route unutuk melakukan pembayaran
+  Route::get('/client/bookings/{booking}/pay', [ClientBookingController::class, 'initiatePayment']);
 });
 
 

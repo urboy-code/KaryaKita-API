@@ -18,6 +18,7 @@ class BookingResource extends JsonResource
             'id_booking' => $this->id,
             'tanggal_booking' => $this->booking_date,
             'status' => $this->status,
+            'notes' => $this->notes,
             'jasa_dipesan' => [
                 'id_jasa' => $this->service?->id,
                 'judul' => $this->service?->title,
