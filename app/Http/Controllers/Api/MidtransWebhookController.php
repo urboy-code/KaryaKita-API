@@ -22,7 +22,7 @@ class MidtransWebhookController extends Controller
         $grossAmount = $notification->gross_amount;
         $transactionStatus = $notification->transaction_status;
 
-        $signatureKey = hash("sha152", $orderId . $statusCode . $grossAmount, config('midtrans.server_key'));
+        $signatureKey = hash("sha512", $orderId . $statusCode . $grossAmount . config('midtrans.server_key'));
 
         if ($signatureKey != $notification->signature_key) {
             return response()->json([
@@ -31,12 +31,20 @@ class MidtransWebhookController extends Controller
         }
 
         $bookingId = explode('-', $orderId)[1];
-        $booking = Booking::findOrFail($bookingId);
+        $booking = Booking::find($bookingId);
+        // validasi booking
+        if (!$booking) {
+            return response()->json([
+                'message' => 'Booking not found'
+            ], 403);
+        }
 
+        // handle status transaksi
         if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+            // Jika pembayaran berhasil
             $booking->update(['status' => 'paid']);
         } else if ($transactionStatus == 'expire' || $transactionStatus == 'cancel' || $transactionStatus == 'deny') {
-            $booking->update(['status' => 'rejected']);
+            $booking->updated(['status' => 'failed']);
         }
 
         return response()->json([

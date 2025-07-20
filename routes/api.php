@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientBookingController;
+use App\Http\Controllers\API\MidtransWebhookController;
 use App\Http\Controllers\Api\TalentBookingController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/midtrans/notification', [MidtransWebhookController::class, 'handle']);
 
 Route::middleware(['auth:sanctum', 'role:talent'])->group(function () {
   Route::get('/user', function (Request $request) {
@@ -36,6 +38,7 @@ Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
   // Route unutuk melakukan pembayaran
   Route::get('/client/bookings/{booking}/pay', [ClientBookingController::class, 'initiatePayment']);
 });
+
 
 
 Route::get('/services', [ServiceController::class, 'index']);

@@ -36,7 +36,7 @@ class ClientBookingController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id' => $booking->id,
+                'order_id' => 'KARYAKITA-' . $booking->id . '-' . \Illuminate\Support\Str::random(5),
                 'gross_amount' => $booking->service->price,
             ],
             'customer_details' => [

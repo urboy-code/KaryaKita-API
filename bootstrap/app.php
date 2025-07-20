@@ -27,5 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('login');
         });
+
+        // $middleware->validateCsrfTokens(except: [
+        //     'api/midtrans/notification',
+        //     'api/midtrans/notification/*'
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {})->create();
