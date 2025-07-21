@@ -47,6 +47,29 @@ class ServiceController extends Controller
         return (new ServiceResource($service))->response()->setStatusCode(201);
     }
 
+    /**
+     * @OA\Get(
+     * path="/api/services/{service}",
+     * summary="Menampilkan detail jasa",
+     * tags={"Services"},
+     * @OA\Parameter(
+     * name="service",
+     * description="ID jasa",
+     * required=true,
+     * in="path",
+     * @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     * response=200,
+     * description="Operasi berhasil",
+     * @OA\JsonContent(ref="#/components/schemas/ServiceResource")
+     * ),
+     * @OA\Response(
+     * response=404,
+     * description="Data tidak ditemukan",
+     * )
+     * )
+     */
     public function show(Service $service)
     {
         $service->load('user.profile', 'category');

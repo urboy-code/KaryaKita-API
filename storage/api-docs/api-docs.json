@@ -32,6 +32,41 @@
                     }
                 }
             }
+        },
+        "/api/services/{service}": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Menampilkan detail jasa",
+                "operationId": "9a19054dbc3ed19d97fe0e0cee5b62cc",
+                "parameters": [
+                    {
+                        "name": "service",
+                        "in": "path",
+                        "description": "ID jasa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operasi berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan"
+                    }
+                }
+            }
         }
     },
     "components": {
