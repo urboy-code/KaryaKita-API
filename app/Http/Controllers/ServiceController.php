@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+    /**
+     * @OA\Get(
+     * path="/api/services",
+     * summary="Menampilkan semua jasa",
+     * tags={"Services"},
+     * @OA\Response(
+     * response=200,
+     * description="Operasi berhasil",
+     * @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ServiceResource"))
+     * )
+     * )
+     */
     //
     public function index()
     {

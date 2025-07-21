@@ -1,0 +1,91 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "KaryaKita API Documentation",
+        "description": "Dokumentasi API untuk platform marketplace jasa kreatif KaryaKita.",
+        "contact": {
+            "email": "urowncode@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Menampilkan semua jasa",
+                "operationId": "4c175c5d6594b4a5112bbe15a46e2bb4",
+                "responses": {
+                    "200": {
+                        "description": "Operasi berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ServiceResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ServiceResource": {
+                "title": "Service Resource",
+                "description": "Format data untuk satu jasa",
+                "properties": {
+                    "id_jasa": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "judul": {
+                        "type": "string",
+                        "example": "Desain Logo"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "desain-logo"
+                    },
+                    "harga_format": {
+                        "type": "string",
+                        "example": "Rp 10.000"
+                    },
+                    "harga_angka": {
+                        "type": "integer",
+                        "example": 10000
+                    },
+                    "deskripsi_singkat": {
+                        "type": "string",
+                        "example": "Desain logo untuk perusahaan"
+                    },
+                    "deskripsi_lengkap": {
+                        "type": "string",
+                        "example": "Desain logo untuk perusahaan"
+                    },
+                    "foto_url": {
+                        "type": "string"
+                    },
+                    "kategori": {
+                        "type": "object"
+                    },
+                    "talent": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Services",
+            "description": "Services"
+        }
+    ]
+}
